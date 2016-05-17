@@ -23,16 +23,6 @@ void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
    case State0:
        painter->drawText(25,25, "0");
        break;
-   case StateWinX:
-       painter->setBrush(Qt::green);
-       painter->drawRect(0,0,50,50);
-       painter->drawText(25,25,"X");
-       break;
-   case StateWin0:
-       painter->setBrush(Qt::green);
-       painter->drawRect(0,0,50,50);
-       painter->drawText(25,25, "0");
-       break;
    default:
        break;
    }
