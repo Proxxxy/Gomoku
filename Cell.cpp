@@ -16,6 +16,8 @@ QRectF Cell::boundingRect() const
 
 void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(widget);
+    Q_UNUSED(option);
     painter->drawRect(0,0,50,50);
     switch (m_state) {
     case StateX:
@@ -31,6 +33,7 @@ void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event);
     event->accept();
 }
 
@@ -47,5 +50,6 @@ void Cell::setState(State stat)
 
 void Cell::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event);
     emit clicked(this);
 }

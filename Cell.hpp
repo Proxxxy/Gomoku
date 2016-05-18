@@ -14,9 +14,7 @@ public:
     enum State {
         Statenothing,
         StateX,
-        State0,
-        StateWinX,
-        StateWin0
+        State0
     };
 
     QRectF boundingRect() const;

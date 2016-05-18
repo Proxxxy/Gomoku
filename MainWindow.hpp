@@ -20,7 +20,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     Cell *m_cells[9][9];
-    int check();
+    int check(Cell* cell);
+    void setLabel(QString string);
 
 protected slots:
     void onCellClicked(Cell *cell);
