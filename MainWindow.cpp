@@ -1,15 +1,11 @@
 #include "MainWindow.hpp"
 #include "ui_MainWindow.h"
-#include <QGraphicsScene>
-#include <Qcolor>
 #include "Cell.hpp"
-#include <iostream>
-#include <windows.h>
+#include <QGraphicsScene>
+#include <QColor>
 #include <QDebug>
 
-
 const int cellSize = 32;
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,28 +38,29 @@ int MainWindow::check(){
                         return 1;
                     }
                 }
+
                 if (i<6){
                     if (m_cells[j][i]->state() == m_cells[j][i+1]->state() == m_cells[j][i+2]->state() == m_cells[j][i+3]->state() and m_cells[j][i]->state() == m_cells[j][i+4]->state()){
                         return 1;
                     }
                 }
+
                 if (j<6 and i<6){
                     if (m_cells[j][i]->state() == m_cells[j+1][i+1]->state() == m_cells[j+2][i+2]->state() == m_cells[j+3][i+3]->state() and m_cells[j][i]->state() == m_cells[j+4][i+4]->state()){
                         return 1;
                     }
                 }
+
                 if (j>4 and i<6){
                     if (m_cells[j][i]->state() == m_cells[j+1][i-1]->state() == m_cells[j+2][i-2]->state() == m_cells[j+3][i-3]->state() and m_cells[j][i]->state() == m_cells[j+4][i-4]->state()){
                         return 1;
-                    }
 
+                    }
                 }
             }
         }
     }
 }
-
-
 
 MainWindow::~MainWindow()
 {
@@ -76,7 +73,7 @@ void MainWindow::onCellClicked(Cell *cell)
 
     if(cell->state() != Cell::State(0)) {
         return;
-     }
+    }
 
 
     if (firstPlayerMove) {
@@ -88,12 +85,10 @@ void MainWindow::onCellClicked(Cell *cell)
     }
 
     if (check()==1){
-       if (check()==1){
-       exit(0);
-    }
-       if (check()==2){
+        if (check()==1){
+            exit(0);
+        }
+        if (check()==2){
+        }
     }
 }
-}
-
-

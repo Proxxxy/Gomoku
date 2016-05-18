@@ -1,7 +1,8 @@
+#include "MainWindow.hpp"
 #include "Cell.hpp"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
-#include "MainWindow.hpp"
+
 Cell::Cell():QGraphicsObject()
 
 {
@@ -15,17 +16,17 @@ QRectF Cell::boundingRect() const
 
 void Cell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-   painter->drawRect(0,0,50,50);
-   switch (m_state) {
-   case StateX:
-       painter->drawText(25,25, "X");
-       break;
-   case State0:
-       painter->drawText(25,25, "0");
-       break;
-   default:
-       break;
-   }
+    painter->drawRect(0,0,50,50);
+    switch (m_state) {
+    case StateX:
+        painter->drawText(25,25, "X");
+        break;
+    case State0:
+        painter->drawText(25,25, "0");
+        break;
+    default:
+        break;
+    }
 }
 
 void Cell::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -44,10 +45,7 @@ void Cell::setState(State stat)
     update();
 }
 
-
-
 void Cell::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     emit clicked(this);
 }
-
