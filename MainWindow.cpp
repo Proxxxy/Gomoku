@@ -35,41 +35,41 @@ int MainWindow::check(){
         for (int i=0; i<9; i++){
             if (m_cells[j][i]->state()!=Cell::Statenothing){
                 if (j<6){
-                    if (m_cells[j][i]->state() == m_cells[j+1][i]->state() == m_cells[j+2][i]->state() == m_cells[j+3][i]->state() and m_cells[j][i]->state() == m_cells[j+4][i]->state() ){
+                    if (m_cells[j][i]->state() == m_cells[j+1][i]->state() == m_cells[j+2][i]->state() == m_cells[j+3][i]->state() and m_cells[j][i]->state() == m_cells[j+4][i]->state()){
                         if (m_cells[j][i]->state() == Cell::StateX) {
                             return 1;
-                        } else {
+                        } else if (m_cells[j][i]->state() == Cell::State0) {
                             return 2;
                         }
                     }
+                }
 
-                    if (i<6){
-                        if (m_cells[j][i]->state() == m_cells[j][i+1]->state() == m_cells[j][i+2]->state() == m_cells[j][i+3]->state() and m_cells[j][i]->state() == m_cells[j][i+4]->state()){
-                            if (m_cells[j][i]->state() == Cell::StateX) {
-                                return 1;
-                            } else {
-                                return 2;
-                            }
+                if (i<6){
+                    if (m_cells[j][i]->state() == m_cells[j][i+1]->state() == m_cells[j][i+2]->state() == m_cells[j][i+3]->state() and m_cells[j][i]->state() == m_cells[j][i+4]->state()){
+                        if (m_cells[j][i]->state() == Cell::StateX) {
+                            return 1;
+                        } else if (m_cells[j][i]->state() == Cell::State0) {
+                            return 2;
                         }
                     }
+                }
 
-                    if (j<6 and i<6){
-                        if (m_cells[j][i]->state() == m_cells[j+1][i+1]->state() == m_cells[j+2][i+2]->state() == m_cells[j+3][i+3]->state() and m_cells[j][i]->state() == m_cells[j+4][i+4]->state()){
-                            if (m_cells[j][i]->state() == Cell::StateX) {
-                                return 1;
-                            } else {
-                                return 2;
-                            }
+                if (j<6 and i<6){
+                    if (m_cells[j][i]->state() == m_cells[j+1][i+1]->state() == m_cells[j+2][i+2]->state() == m_cells[j+3][i+3]->state() and m_cells[j][i]->state() == m_cells[j+4][i+4]->state()){
+                        if (m_cells[j][i]->state() == Cell::StateX) {
+                            return 1;
+                        } else if (m_cells[j][i]->state() == Cell::State0) {
+                            return 2;
                         }
                     }
+                }
 
-                    if (j>4 and i<6){
-                        if (m_cells[j][i]->state() == m_cells[j+1][i-1]->state() == m_cells[j+2][i-2]->state() == m_cells[j+3][i-3]->state() and m_cells[j][i]->state() == m_cells[j+4][i-4]->state()){
-                            if (m_cells[j][i]->state() == Cell::StateX) {
-                                return 1;
-                            } else {
-                                return 2;
-                            }
+                if (j>4 and i<6){
+                    if (m_cells[j][i]->state() == m_cells[j+1][i-1]->state() == m_cells[j+2][i-2]->state() == m_cells[j+3][i-3]->state() and m_cells[j][i]->state() == m_cells[j+4][i-4]->state()){
+                        if (m_cells[j][i]->state() == Cell::StateX) {
+                            return 1;
+                        } else if (m_cells[j][i]->state() == Cell::State0) {
+                            return 2;
                         }
                     }
                 }
@@ -109,6 +109,8 @@ void MainWindow::onCellClicked(Cell *cell)
             msgBox.setText("0 wins!");
         }
         msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
+        msgBox.setButtonText(QMessageBox::Ok, "New Game");
+        msgBox.setButtonText(QMessageBox::Close, "Quit");
         msgBox.setDefaultButton(QMessageBox::Ok);
         int ret = msgBox.exec();
         switch (ret) {
@@ -119,6 +121,7 @@ void MainWindow::onCellClicked(Cell *cell)
                 }
             }
             m_scene->update();
+            firstPlayerMove = false;
             break;
         case QMessageBox::Close:
             exit(0);
