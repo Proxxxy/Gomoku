@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 #include <QColor>
 #include <QDebug>
+#include <QMessageBox>
 
 const int cellSize = 32;
 
@@ -35,26 +36,41 @@ int MainWindow::check(){
             if (m_cells[j][i]->state()!=Cell::Statenothing){
                 if (j<6){
                     if (m_cells[j][i]->state() == m_cells[j+1][i]->state() == m_cells[j+2][i]->state() == m_cells[j+3][i]->state() and m_cells[j][i]->state() == m_cells[j+4][i]->state() ){
-                        return 1;
+                        if (m_cells[j][i]->state() == Cell::StateX) {
+                            return 1;
+                        } else {
+                            return 2;
+                        }
                     }
-                }
 
-                if (i<6){
-                    if (m_cells[j][i]->state() == m_cells[j][i+1]->state() == m_cells[j][i+2]->state() == m_cells[j][i+3]->state() and m_cells[j][i]->state() == m_cells[j][i+4]->state()){
-                        return 1;
+                    if (i<6){
+                        if (m_cells[j][i]->state() == m_cells[j][i+1]->state() == m_cells[j][i+2]->state() == m_cells[j][i+3]->state() and m_cells[j][i]->state() == m_cells[j][i+4]->state()){
+                            if (m_cells[j][i]->state() == Cell::StateX) {
+                                return 1;
+                            } else {
+                                return 2;
+                            }
+                        }
                     }
-                }
 
-                if (j<6 and i<6){
-                    if (m_cells[j][i]->state() == m_cells[j+1][i+1]->state() == m_cells[j+2][i+2]->state() == m_cells[j+3][i+3]->state() and m_cells[j][i]->state() == m_cells[j+4][i+4]->state()){
-                        return 1;
+                    if (j<6 and i<6){
+                        if (m_cells[j][i]->state() == m_cells[j+1][i+1]->state() == m_cells[j+2][i+2]->state() == m_cells[j+3][i+3]->state() and m_cells[j][i]->state() == m_cells[j+4][i+4]->state()){
+                            if (m_cells[j][i]->state() == Cell::StateX) {
+                                return 1;
+                            } else {
+                                return 2;
+                            }
+                        }
                     }
-                }
 
-                if (j>4 and i<6){
-                    if (m_cells[j][i]->state() == m_cells[j+1][i-1]->state() == m_cells[j+2][i-2]->state() == m_cells[j+3][i-3]->state() and m_cells[j][i]->state() == m_cells[j+4][i-4]->state()){
-                        return 1;
-
+                    if (j>4 and i<6){
+                        if (m_cells[j][i]->state() == m_cells[j+1][i-1]->state() == m_cells[j+2][i-2]->state() == m_cells[j+3][i-3]->state() and m_cells[j][i]->state() == m_cells[j+4][i-4]->state()){
+                            if (m_cells[j][i]->state() == Cell::StateX) {
+                                return 1;
+                            } else {
+                                return 2;
+                            }
+                        }
                     }
                 }
             }
@@ -84,11 +100,31 @@ void MainWindow::onCellClicked(Cell *cell)
         firstPlayerMove = true;
     }
 
-    if (check()==1){
-        if (check()==1){
-            exit(0);
+    if (check() != 0) {
+        QMessageBox msgBox;
+        if (check() == 1) {
+            msgBox.setText("X wins!");
         }
-        if (check()==2){
+        if (check() == 2) {
+            msgBox.setText("0 wins!");
+        }
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Close);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        int ret = msgBox.exec();
+        switch (ret) {
+        case QMessageBox::Ok:
+            for (int j=0; j<9; j++) {
+                for(int i=0; i<9; i++) {
+                    m_cells[j][i]->setState(Cell::Statenothing);
+                }
+            }
+            m_scene->update();
+            break;
+        case QMessageBox::Close:
+            exit(0);
+            break;
+        default:
+            break;
         }
     }
 }
